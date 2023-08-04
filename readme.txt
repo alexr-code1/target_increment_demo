@@ -35,8 +35,8 @@ What's Missing:
 	1. Route in app.py to match player name/color name submitted
 	to match player circle used in game 
 
-	2. Route in app.py to match player name/color name submitted
-	to match player circle used in game 
+	2. Route in app.py to match player questions/answers submitted
+	to match questions/answers used in game 
 
 ------------------------------------------------------------------------------------
 
