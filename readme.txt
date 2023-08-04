@@ -47,5 +47,7 @@ and also +.5 for going over trivial compute only kindly
 4. When page is refreshed, game status disappears, needs 
 to update in backend/db
 
+5. winning condition is landing on (5,5) only, 
+perhaps implement landing past (5,5) as winning condition also
 
 ------------------------------------------------------------------------------------
