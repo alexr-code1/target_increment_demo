@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QA</title>
+</head>
+<body>
+    <h1>QA</h1>    
+
+    <h2>Categories</h2>
+    <form id="categories-form" action="/qa" method="POST">
+        <div class="form-group">
+            <label for="category1">Category 1</label>
+            <input type="text" class="form-control" id="category1" name="category1" required>
+        </div>
+        <div class="form-group">
+            <label for="category2">Category 2</label>
+            <input type="text" class="form-control" id="category2" name="category2" required>
+        </div>
+        <div class="form-group">
+            <label for="category3">Category 3</label>
+            <input type="text" class="form-control" id="category3" name="category3" required>
+        </div>
+        <div class="form-group">
+            <label for="category4">Category 4</label>
+            <input type="text" class="form-control" id="category4" name="category4" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <h2>Upload Questions from .csv <br></br>
+        The Rows are: 
+        questions, answers, categories, flagged or unflagged<br></br></h2>
+        <h2>Upload Questions from CSV</h2>
+        <form id="upload-csv-form">
+            <div class="form-group">
+                <label for="csv-file">Upload CSV file:</label>
+                <input type="file" class="form-control-file" id="csv-file" name="csv-file" accept=".csv" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+
+    <h2>Submit Questions</h2>
+    <form id="submit-qa-form">
+        <div class="form-group">
+            <label for="question">Question</label>
+            <input type="text" class="form-control" id="question" name="question" required>
+        </div>
+        <div class="form-group">
+            <label for="answer">Answer</label>
+            <input type="text" class="form-control" id="answer" name="answer" required>
+        </div>
+        <div class="form-group">
+            <label for="category_id">Category</label>
+            <select class="form-control" id="category_id" name="category_id" required>
+                {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="flagged" name="flagged">
+            <label class="form-check-label" for="flagged">Flagged</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+
+    <h2>Edit Categories</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr>
+                <td>
+                    <input type="text" class="form-control edit-category" value="{{ category.name }}" data-id="{{ category.id }}" data-original="{{ category.name }}">
+                </td>
+                <td>
+                    <button class="btn btn-primary update-category" data-id="{{ category.id }}">Update</button>
+                    <button class="btn btn-danger delete-category" data-id="{{ category.id }}">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Edit Questions and Answers</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Answer</th>
+                <th>Category</th>
+                <th>Flagged</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in questions %}
+            <tr>
+                <td>
+                    <input type="text" class="form-control edit-question" value="{{ question.question }}" data-id="{{ question.id }}" data-original="{{ question.question }}">
+                </td>
+                <td>
+                    <input type="text" class="form-control edit-answer" value="{{ question.answer }}" data-id="{{ question.id }}" data-original="{{ question.answer }}">
+                </td>
+                <td>{{ question.category.name }}</td>
+                <td>
+                    <input type="checkbox" class="form-check-input edit-flagged" {% if question.flagged %}checked{% endif %} data-id="{{ question.id }}">
+                </td>
+                <td>
+                    <button class="btn btn-primary update-question" data-id="{{ question.id }}">Update Question</button>
+                    <button class="btn btn-primary update-answer" data-id="{{ question.id }}">Update Answer</button>
+                    <button class="btn btn-danger delete-question" data-id="{{ question.id }}">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    
+
+    <button class="btn btn-primary" onclick="window.history.back()">Back</button>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Submit question form using AJAX
+        $(document).on('submit', '#submit-qa-form', function(e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+
+            // Get the flagged value
+            var flagged = $('#flagged').prop('checked');
+            formData.append('flagged', flagged);
+
+            $.ajax({
+                url: '/add_qa',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log(response);
+                    alert('Question submitted successfully');
+                },
+                error: function(error) {
+                    console.error(error);
+                    alert('An error occurred while submitting the question');
+                }
+            });
+        });
+
+        // Upload CSV file
+        $(document).on('submit', '#upload-csv-form', function(e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: '/upload_csv',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log(response);
+                    alert('CSV file uploaded successfully');
+                },
+                error: function(error) {
+                    console.error(error);
+                    alert('An error occurred while uploading the CSV file');
+                }
+            });
+        });
+
+        // Update question
+        $(document).on('click', '.update-question', function () {
+            var questionId = $(this).data('id');
+            var questionText = $('.edit-question[data-id="' + questionId + '"]').val();
+            $.ajax({
+                url: '/update_question',
+                type: 'POST',
+                data: { id: questionId, question: questionText },
+                success: function (response) {
+                    console.log(response);
+                    alert('Question updated successfully');
+                },
+                error: function (error) {
+                    console.error(error);
+                    alert('An error occurred while updating the question');
+                }
+            });
+        });
+
+        // Update answer
+        $(document).on('click', '.update-answer', function () {
+            var questionId = $(this).data('id');
+            var answerText = $('.edit-answer[data-id="' + questionId + '"]').val();
+            $.ajax({
+                url: '/update_answer',
+                type: 'POST',
+                data: { id: questionId, answer: answerText },
+                success: function (response) {
+                    console.log(response);
+                    alert('Answer updated successfully');
+                },
+                error: function (error) {
+                    console.error(error);
+                    alert('An error occurred while updating the answer');
+                }
+            });
+        });
+
+        // Delete question
+        $(document).on('click', '.delete-question', function () {
+            var questionId = $(this).data('id');
+            if (confirm('Are you sure you want to delete this question?')) {
+                $.ajax({
+                    url: '/delete_question',
+                    type: 'POST',
+                    data: { id: questionId },
+                    success: function (response) {
+                        console.log(response);
+                        alert('Question deleted successfully');
+                    },
+                    error: function (error) {
+                        console.error(error);
+                        alert('An error occurred while deleting the question');
+                    }
+                });
+            }
+        });
+
+        // Update category
+        $(document).on('click', '.update-category', function () {
+            var categoryId = $(this).data('id');
+            var categoryText = $('.edit-category[data-id="' + categoryId + '"]').val();
+            $.ajax({
+                url: '/update_category',
+                type: 'POST',
+                data: { id: categoryId, name: categoryText },
+                success: function (response) {
+                    console.log(response);
+                    alert('Category updated successfully');
+                },
+                error: function (error) {
+                    console.error(error);
+                    alert('An error occurred while updating the category');
+                }
+            });
+        });
+
+        // Delete category
+        $(document).on('click', '.delete-category', function () {
+            var categoryId = $(this).data('id');
+            if (confirm('Are you sure you want to delete this category?')) {
+                $.ajax({
+                    url: '/delete_category',
+                    type: 'POST',
+                    data: { id: categoryId },
+                    success: function (response) {
+                        console.log(response);
+                        alert('Category deleted successfully');
+                    },
+                    error: function (error) {
+                        console.error(error);
+                        alert('An error occurred while deleting the category');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

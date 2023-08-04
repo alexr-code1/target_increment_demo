@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trivial Compute Manual</title>
+</head>
+<body>
+    <h1>Trivial Compute Manual</h1>
+    <p>
+        Welcome to Trivial Compute! This is a simple web-based board game where players roll a dice and move on a grid.
+        The game includes the following features:
+    </p>
+    <ul>
+        <li>Players can click the "Roll Dice" button to roll a dice and move their pieces accordingly.</li>
+        <li>If a player lands on the "Trivial Compute" cell (E5), they will win the game!</li>
+        <li>Players get a score of 0.5 if they land on E5 again and win.</li>
+        <li>Players get a score of 1 if they land past (5, 5) at the end of their turn.</li>
+        <li>Players can choose a direction (up, down, left, or right) to move after rolling the dice.</li>
+        <li>Players can answer a trivia question after moving, and their answers will be checked for correctness.</li>
+        <li>Correct answers increase the player's score, while incorrect answers move the game to the next player.</li>
+    </ul>
+    <p>
+        Enjoy playing Trivial Compute with your friends! If you have any questions or issues, please refer to the game
+        manual or contact our support team.
+    </p>
+    <p><a href="{{ url_for('index') }}">Back to Game</a></p>
+
+</body>
+</html>

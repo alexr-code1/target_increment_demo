@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trivial Compute</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .well {
+            background-color: #f8f8f8;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .player-circle {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .player-info {
+            display: inline-block;
+            vertical-align: top;
+            margin-top: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Trivial Compute</h1>
+    <div id="grid-container">
+        <table id="grid">
+            <tr>
+                <td id="cell-A1" class="highlighted light-grey">Roll Again</td>
+                <td id="cell-A2" class="highlighted yellow"></td>
+                <td id="cell-A3" class="highlighted blue"></td>
+                <td id="cell-A4" class="highlighted green"></td>
+                <td id="cell-A5" class="highlighted red">HQ</td>
+                <td id="cell-A6" class="highlighted yellow"></td>
+                <td id="cell-A7" class="highlighted blue"></td>
+                <td id="cell-A8" class="highlighted green"></td>
+                <td id="cell-A9" class="highlighted light-grey">Roll Again</td>
+            </tr>
+            <tr>
+                <td id="cell-B1" class="highlighted red"></td>
+                <td id="cell-B2" class="light-grey"></td>
+                <td id="cell-B3" class="light-grey"></td>
+                <td id="cell-B4" class="light-grey"></td>
+                <td id="cell-B5" class="highlighted yellow"></td>
+                <td id="cell-B6" class="light-grey"></td>
+                <td id="cell-B7" class="light-grey"></td>
+                <td id="cell-B8" class="light-grey"></td>
+                <td id="cell-B9" class="highlighted red"></td>
+            </tr>
+            <tr>
+                <td id="cell-C1" class="highlighted green"></td>
+                <td id="cell-C2" class="light-grey"></td>
+                <td id="cell-C3" class="light-grey"></td>
+                <td id="cell-C4" class="light-grey"></td>
+                <td id="cell-C5" class="highlighted blue"></td>
+                <td id="cell-C6" class="light-grey"></td>
+                <td id="cell-C7" class="light-grey"></td>
+                <td id="cell-C8" class="light-grey"></td>
+                <td id="cell-C9" class="highlighted yellow"></td>
+            </tr>
+            <tr>
+                <td id="cell-D1" class="highlighted blue"></td>
+                <td id="cell-D2" class="light-grey"></td>
+                <td id="cell-D3" class="light-grey"></td>
+                <td id="cell-D4" class="light-grey"></td>
+                <td id="cell-D5" class="highlighted green"></td>
+                <td id="cell-D6" class="light-grey"></td>
+                <td id="cell-D7" class="light-grey"></td>
+                <td id="cell-D8" class="light-grey"></td>
+                <td id="cell-D9" class="highlighted blue"></td>
+            </tr>
+            <tr>
+                <td id="cell-E1" class="highlighted yellow">HQ</td>
+                <td id="cell-E2" class="highlighted blue"></td>
+                <td id="cell-E3" class="highlighted green"></td>
+                <td id="cell-E4" class="highlighted red"></td>
+                <td id="cell-E5" class="highlighted light-grey">
+                    Trivial Compute
+                </td>
+                <td id="cell-E6" class="highlighted blue"></td>
+                <td id="cell-E7" class="highlighted yellow"></td>
+                <td id="cell-E8" class="highlighted red"></td>
+                <td id="cell-E9" class="highlighted green">HQ</td>
+            </tr>
+            <tr>
+                <td id="cell-F1" class="highlighted red"></td>
+                <td id="cell-F2" class="light-grey"></td>
+                <td id="cell-F3" class="light-grey"></td>
+                <td id="cell-F4" class="light-grey"></td>
+                <td id="cell-F5" class="highlighted yellow"></td>
+                <td id="cell-F6" class="light-grey"></td>
+                <td id="cell-F7" class="light-grey"></td>
+                <td id="cell-F8" class="light-grey"></td>
+                <td id="cell-F9" class="highlighted red"></td>
+            </tr>
+            <tr>
+                <td id="cell-G1" class="highlighted green"></td>
+                <td id="cell-G2" class="light-grey"></td>
+                <td id="cell-G3" class="light-grey"></td>
+                <td id="cell-G4" class="light-grey"></td>
+                <td id="cell-G5" class="highlighted red"></td>
+                <td id="cell-G6" class="light-grey"></td>
+                <td id="cell-G7" class="light-grey"></td>
+                <td id="cell-G8" class="light-grey"></td>
+                <td id="cell-G9" class="highlighted yellow"></td>
+            </tr>
+            <tr>
+                <td id="cell-H1" class="highlighted blue"></td>
+                <td id="cell-H2" class="light-grey"></td>
+                <td id="cell-H3" class="light-grey"></td>
+                <td id="cell-H4" class="light-grey"></td>
+                <td id="cell-H5" class="highlighted green"></td>
+                <td id="cell-H6" class="light-grey"></td>
+                <td id="cell-H7" class="light-grey"></td>
+                <td id="cell-H8" class="light-grey"></td>
+                <td id="cell-H9" class="highlighted blue"></td>
+            </tr>
+            <tr>
+                <td id="cell-I1" class="highlighted light-grey">Roll Again</td>
+                <td id="cell-I2" class="highlighted yellow"></td>
+                <td id="cell-I3" class="highlighted red"></td>
+                <td id="cell-I4" class="highlighted green"></td>
+                <td id="cell-I5" class="highlighted blue">HQ</td>
+                <td id="cell-I6" class="highlighted yellow"></td>
+                <td id="cell-I7" class="highlighted red"></td>
+                <td id="cell-I8" class="highlighted green"></td>
+                <td id="cell-I9" class="highlighted light-grey">Roll Again</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-12 text-center">
+        <a href="{{ url_for('manual') }}" class="btn btn-primary">Manual</a>
+        
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button class="btn btn-primary" onclick="location.href='/players'">Player</button>
+                <button class="btn btn-primary" onclick="location.href='/qa'">QA</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="well">
+                    <h3>Output:</h3>
+                    <p id="output"></p>
+                </div>
+            </div>
+            <div class="well">
+                <h3>Dice Value:</h3>
+                <p id="diceValue">-</p>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-primary" onclick="rollDice()">Roll Dice</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3>Player Scores</h3>
+                <ul id="player-scores"></ul>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div id="player-circles"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div id="player-info"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Player information
+        var players = [
+    { name: "A", color: "red", x: 5, y: 5, score: 0, prevX: 5, prevY: 5 },
+    { name: "B", color: "blue", x: 5, y: 5, score: 0, prevX: 5, prevY: 5 },
+    { name: "C", color: "green", x: 5, y: 5, score: 0, prevX: 5, prevY: 5 },
+    { name: "D", color: "yellow", x: 5, y: 5, score: 0, prevX: 5, prevY: 5 }
+];
+
+function updateFixedCells() {
+        var fixedCells = {
+            'A1': 'Roll Again',
+            'A9': 'Roll Again',
+            'E1': 'HQ',
+            'E5': 'Trivial Compute',
+            'E9': 'HQ',
+        };
+
+        for (var cellId in fixedCells) {
+            var cell = document.getElementById('cell-' + cellId);
+            cell.innerHTML = fixedCells[cellId];
+        }
+    }
+
+    function movePlayer(direction, steps) {
+    var currentPlayer = players[currentPlayerIndex];
+
+    // Store the previous player position before updating
+    currentPlayer.prevX = currentPlayer.x;
+    currentPlayer.prevY = currentPlayer.y;
+
+    // Update the player's position based on the chosen direction and steps
+    switch (direction) {
+        case 'up':
+            currentPlayer.y = Math.max(1, currentPlayer.y - steps);
+            break;
+        case 'down':
+            currentPlayer.y = Math.min(9, currentPlayer.y + steps);
+            break;
+        case 'left':
+            currentPlayer.x = Math.max(1, currentPlayer.x - steps);
+            break;
+        case 'right':
+            currentPlayer.x = Math.min(9, currentPlayer.x + steps);
+            break;
+    }
+
+    // Check if the player lands on E5 AGAIN
+    if (currentPlayer.x === 5 && currentPlayer.y === 5) {
+        currentPlayer.score += 0.5;
+        alert(currentPlayer.name + " wins the game!");
+    }
+
+    // Check if the player lands past (5, 5) at the end
+    if (currentPlayer.x > 5 || currentPlayer.y > 5) {
+        currentPlayer.score += 1;
+        
+    }
+
+        // Check if the player lands on "Roll Again"
+        var cellId = "cell-" + String.fromCharCode(65 + (currentPlayer.y - 1)) + currentPlayer.x;
+        var cell = document.getElementById(cellId);
+        if (cell.innerHTML === "Roll Again") {
+            
+            alert(currentPlayer.name + " landed on 'Roll Again'! Rolling the dice again...");
+            var diceRoll = Math.floor(Math.random() * 6) + 1;
+            // Display the new dice value
+            var outputElement = document.getElementById('output');
+            outputElement.innerHTML = "The dice rolled a " + diceRoll + "!";
+            return;
+        }
+
+    // Update the player's score in the player-info div
+    setPlayerInformation();
+
+    updateFixedCells();
+}
+
+
+
+
+
+function setPlayerInformation() {
+        var cells = document.querySelectorAll('td');
+        cells.forEach(function (cell) {
+            // Check if the cell contains fixed text (HQ or Roll Again) before clearing it
+            if (cell.innerHTML !== "HQ" && cell.innerHTML !== "Roll Again") {
+                cell.innerHTML = '';
+            }
+
+            players.forEach(function (player) {
+                // Check if a player is in this cell
+                if (player.x === cell.cellIndex + 1 && player.y === cell.parentElement.rowIndex + 1) {
+                    var playerCircle = document.createElement('div');
+                    playerCircle.className = 'player-circle';
+                    playerCircle.style.backgroundColor = player.color;
+
+                    var playerName = document.createElement('span');
+                    playerName.className = 'player-info';
+                    playerName.innerText = player.name;
+
+                    playerCircle.appendChild(playerName);
+                    cell.appendChild(playerCircle);
+                }
+            });
+        });
+            // Update the player scores in the player-scores div
+    var playerScoresElement = document.getElementById('player-scores');
+    playerScoresElement.innerHTML = '';
+
+    players.forEach(function (player) {
+        var playerScoreItem = document.createElement('li');
+        playerScoreItem.innerText = player.name + ': ' + player.score;
+        playerScoreItem.style.color = player.color;
+
+        playerScoresElement.appendChild(playerScoreItem);
+    });
+    }
+
+
+
+
+    // Add a list of hardcoded questions and answers
+    var questions = [
+        {
+            question: "What is 2 + 2?",
+            answer: "4"
+        },
+        {
+            question: "What is the capital of France?",
+            answer: "Paris"
+        },
+        // Add more questions as needed
+    ];
+
+    // Store the current player's index
+    var currentPlayerIndex = 0;
+
+        function rollDice() {
+            var grid = [
+                ["Roll Again", "", "", "", "HQ", "", "", "", "Roll Again"],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["HQ", "", "", "", "Trivial Compute", "", "", "", "HQ"],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["Roll Again", "", "", "", "HQ", "", "", "", "Roll Again"]
+            ];
+
+            var rowCount = grid.length;
+            var columnCount = grid[0].length;
+
+            var outputElement = document.getElementById('output');
+    var diceRoll = Math.floor(Math.random() * 6) + 1;
+    outputElement.innerHTML = "The dice rolled a " + diceRoll + "!";
+
+    // Update the diceValue element with the rolled dice value
+    var diceValueElement = document.getElementById('diceValue');
+    diceValueElement.innerText = diceRoll;
+            outputElement.innerHTML = "The dice rolled a " + diceRoll + "!";
+            console.log(diceRoll);
+            for (var i = 0; i < rowCount; i++) {
+                for (var j = 0; j < columnCount; j++) {
+                    var cellId = "cell-" + String.fromCharCode(65 + i) + (j + 1);
+                    var cell = document.getElementById(cellId);
+
+                    if (grid[i][j] === "Roll Again") {
+                        cell.innerHTML = "Roll Again";
+                    } else if (grid[i][j] === "HQ") {
+                        cell.innerHTML = "HQ";
+                    } else {
+                        cell.innerHTML = "";
+                    }
+                }
+            }
+
+            // var chosenDirection = prompt("Choose a direction (up, down, left, right):");
+            // if (chosenDirection !== null && chosenDirection !== "") {
+            //     movePlayer(chosenDirection.toLowerCase(), diceRoll);
+            // }
+
+            // Set the player information again after rolling the dice
+            setPlayerInformation();
+            askQuestion();
+            return diceRoll;
+            
+        }
+
+        function askQuestion() {
+        var currentPlayer = players[currentPlayerIndex];
+        var randomQuestion = questions[Math.floor(Math.random() * questions.length)];
+
+        // Store the question and answer in localStorage to pass it to the question.html
+        localStorage.setItem('question', randomQuestion.question);
+        localStorage.setItem('answer', randomQuestion.answer);
+        
+        // Open the question.html in a new window
+        var questionWindow = window.open('/question', '_blank', 'height=400,width=400');
+        
+        // Display the question and current player in the main page
+        var outputElement = document.getElementById('output');
+        outputElement.innerHTML = currentPlayer.name + ", it's your turn!<br>Question: " + randomQuestion.question;
+    
+    }
+
+    function checkAnswer(playerAnswer) {
+    var currentPlayer = players[currentPlayerIndex];
+
+    // Send the player's answer to the server to check correctness
+    fetch('/check_answer', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            player_answer: playerAnswer,
+            correct_answer: localStorage.getItem('answer'),
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.is_correct) {
+            alert("Answer is correct!");
+            // Move the player only if the answer is correct
+            var diceRoll = parseInt(document.getElementById('diceValue').innerText, 10);
+            var chosenDirection = prompt("Choose a direction (up, down, left, right):");
+            if (chosenDirection !== null && chosenDirection !== "") {
+                movePlayer(chosenDirection.toLowerCase(), diceRoll);
+            }
+        } else {
+            alert("Answer is incorrect!");
+            // Move to the next player
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+        }
+
+        // Set the player information again after answering the question
+        setPlayerInformation();
+    })
+    .catch(error => {
+        console.error('Error checking the answer:', error);
+    });
+}
+    
+    </script>
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

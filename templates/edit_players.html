@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trivial Compute - Edit Players</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <h1>Edit Players</h1>
+    <div class="container">
+        <form action="{{ url_for('edit_players') }}" method="POST">
+            {% for player in players %}
+            <div class="form-group">
+                <input type="hidden" name="player{{ loop.index }}_id" value="{{ player.id }}">
+                <label for="player{{ loop.index }}">Player {{ loop.index }} Name:</label>
+                <input type="text" id="player{{ loop.index }}" name="player{{ loop.index }}" required value="{{ player.name }}">
+                <label for="player{{ loop.index }}_color">Player {{ loop.index }} Color:</label>
+                <select id="player{{ loop.index }}_color" name="player{{ loop.index }}_color" required>
+                    <option value="blue" {% if player.color == 'blue' %}selected{% endif %}>Blue</option>
+                    <option value="green" {% if player.color == 'green' %}selected{% endif %}>Green</option>
+                    <option value="yellow" {% if player.color == 'yellow' %}selected{% endif %}>Yellow</option>
+                    <option value="red" {% if player.color == 'red' %}selected{% endif %}>Red</option>
+                </select>
+                <button class="btn btn-danger delete-player" data-id="{{ player.id }}">Delete</button>
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Update Players</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Back</a>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Delete player
+        $(document).on('click', '.delete-player', function () {
+            var playerId = $(this).data('id');
+            if (confirm('Are you sure you want to delete this player?')) {
+                $.ajax({
+                    url: '/delete_player',
+                    type: 'POST',
+                    data: { id: playerId },
+                    success: function (response) {
+                        console.log(response);
+                        alert('Player deleted successfully');
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.error(error);
+                        alert('An error occurred while deleting the player');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

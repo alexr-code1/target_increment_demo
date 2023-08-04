@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Question</title>
+</head>
+<body>
+    <h1>Question</h1>
+    <div id="question"></div>
+    <button onclick="checkAnswer()">Submit Answer</button>
+
+    <script>
+        // Get the question from localStorage and display it
+        var questionElement = document.getElementById('question');
+        questionElement.innerHTML = localStorage.getItem('question');
+
+        // Function to send the answer back to the main window and close this window
+        function checkAnswer() {
+            var playerAnswer = prompt("Enter your answer:");
+            window.opener.checkAnswer(playerAnswer);
+            window.close();
+        }
+    </script>
+</body>
+</html>
