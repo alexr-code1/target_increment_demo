@@ -136,61 +136,93 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <!-- Player A input box -->
-                <label for="player-a">Player A:</label>
-                <input type="text" id="player-a" name="player-a">
-                <!-- Player A dropdown box -->
-                <label for="player-a-option">Select an option:</label>
-                <select id="player-a-option" name="player-a-option">
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
-                    <option value="option4">Option 4</option>
+                <!-- Player A name input box -->
+                <label for="player-a-name">Player A Name:</label>
+                <input type="text" id="player-a-name" name="player-a-name">
+                <!-- Player A color dropdown box -->
+                <label for="player-a-color">Select a color:</label>
+                <select id="player-a-color" name="player-a-color">
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                </select>
+                <!-- Player A category dropdown box -->
+                <label for="player-a-category">Select a category:</label>
+                <select id="player-a-category" name="player-a-category">
+                    <option value="category1">Category 1</option>
+                    <option value="category2">Category 2</option>
+                    <option value="category3">Category 3</option>
+                    <option value="category4">Category 4</option>
                 </select>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 text-center">
-                <!-- Player B input box -->
-                <label for="player-b">Player B:</label>
-                <input type="text" id="player-b" name="player-b">
-                <!-- Player B dropdown box -->
-                <label for="player-b-option">Select an option:</label>
-                <select id="player-b-option" name="player-b-option">
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
-                    <option value="option4">Option 4</option>
+                <!-- Player B name input box -->
+                <label for="player-b-name">Player B Name:</label>
+                <input type="text" id="player-b-name" name="player-b-name">
+                <!-- Player B color dropdown box -->
+                <label for="player-b-color">Select a color:</label>
+                <select id="player-b-color" name="player-b-color">
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                </select>
+                <!-- Player B category dropdown box -->
+                <label for="player-b-category">Select a category:</label>
+                <select id="player-b-category" name="player-b-category">
+                    <option value="category1">Category 1</option>
+                    <option value="category2">Category 2</option>
+                    <option value="category3">Category 3</option>
+                    <option value="category4">Category 4</option>
                 </select>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 text-center">
-                <!-- Player C input box -->
-                <label for="player-c">Player C:</label>
-                <input type="text" id="player-c" name="player-c">
-                <!-- Player C dropdown box -->
-                <label for="player-c-option">Select an option:</label>
-                <select id="player-c-option" name="player-c-option">
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
-                    <option value="option4">Option 4</option>
+                <!-- Player C name input box -->
+                <label for="player-c-name">Player C Name:</label>
+                <input type="text" id="player-c-name" name="player-c-name">
+                <!-- Player C color dropdown box -->
+                <label for="player-c-color">Select a color:</label>
+                <select id="player-c-color" name="player-c-color">
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                </select>
+                <!-- Player C category dropdown box -->
+                <label for="player-c-category">Select a category:</label>
+                <select id="player-c-category" name="player-c-category">
+                    <option value="category1">Category 1</option>
+                    <option value="category2">Category 2</option>
+                    <option value="category3">Category 3</option>
+                    <option value="category4">Category 4</option>
                 </select>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 text-center">
-                <!-- Player D input box -->
-                <label for="player-d">Player D:</label>
-                <input type="text" id="player-d" name="player-d">
-                <!-- Player D dropdown box -->
-                <label for="player-d-option">Select an option:</label>
-                <select id="player-d-option" name="player-d-option">
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
-                    <option value="option4">Option 4</option>
+                <!-- Player D name input box -->
+                <label for="player-d-name">Player D Name:</label>
+                <input type="text" id="player-d-name" name="player-d-name">
+                <!-- Player D color dropdown box -->
+                <label for="player-d-color">Select a color:</label>
+                <select id="player-d-color" name="player-d-color">
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                </select>
+                <!-- Player D category dropdown box -->
+                <label for="player-d-category">Select a category:</label>
+                <select id="player-d-category" name="player-d-category">
+                    <option value="category1">Category 1</option>
+                    <option value="category2">Category 2</option>
+                    <option value="category3">Category 3</option>
+                    <option value="category4">Category 4</option>
                 </select>
             </div>
         </div>
@@ -202,14 +234,11 @@
         </div>
     </div>
 
-    <div class="col-md-12 text-center">
-        <a href="{{ url_for('manual') }}" class="btn btn-primary">Manual</a>
-        
-    </div>
+
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <button class="btn btn-primary" onclick="location.href='/players'">Player</button>
+                <a href="{{ url_for('manual') }}" class="btn btn-primary">Manual</a>
                 <button class="btn btn-primary" onclick="location.href='/qa'">QA</button>
             </div>
         </div>
@@ -265,31 +294,39 @@
 ];
 
 function saveValues() {
-            // Get the values from the input boxes and dropdowns
-            var playerAName = document.getElementById('player-a').value;
-            var playerAOption = document.getElementById('player-a-option').value;
+            // Get the values from the input boxes, color dropdowns, and category dropdowns
+            var playerAName = document.getElementById('player-a-name').value;
+            var playerAColor = document.getElementById('player-a-color').value;
+            var playerACategory = document.getElementById('player-a-category').value;
 
-            var playerBName = document.getElementById('player-b').value;
-            var playerBOption = document.getElementById('player-b-option').value;
+            var playerBName = document.getElementById('player-b-name').value;
+            var playerBColor = document.getElementById('player-b-color').value;
+            var playerBCategory = document.getElementById('player-b-category').value;
 
-            var playerCName = document.getElementById('player-c').value;
-            var playerCOption = document.getElementById('player-c-option').value;
+            var playerCName = document.getElementById('player-c-name').value;
+            var playerCColor = document.getElementById('player-c-color').value;
+            var playerCCategory = document.getElementById('player-c-category').value;
 
-            var playerDName = document.getElementById('player-d').value;
-            var playerDOption = document.getElementById('player-d-option').value;
+            var playerDName = document.getElementById('player-d-name').value;
+            var playerDColor = document.getElementById('player-d-color').value;
+            var playerDCategory = document.getElementById('player-d-category').value;
 
             // Save the values to players array
             players[0].name = playerAName;
-            players[0].option = playerAOption;
+            players[0].color = playerAColor;
+            players[0].category = playerACategory;
 
             players[1].name = playerBName;
-            players[1].option = playerBOption;
+            players[1].color = playerBColor;
+            players[1].category = playerBCategory;
 
             players[2].name = playerCName;
-            players[2].option = playerCOption;
+            players[2].color = playerCColor;
+            players[2].category = playerCCategory;
 
             players[3].name = playerDName;
-            players[3].option = playerDOption;
+            players[3].color = playerDColor;
+            players[3].category = playerDCategory;
 
             // Set the player information again after saving the values
             setPlayerInformation();
