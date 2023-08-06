@@ -133,6 +133,75 @@
             </tr>
         </table>
     </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <!-- Player A input box -->
+                <label for="player-a">Player A:</label>
+                <input type="text" id="player-a" name="player-a">
+                <!-- Player A dropdown box -->
+                <label for="player-a-option">Select an option:</label>
+                <select id="player-a-option" name="player-a-option">
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                    <option value="option4">Option 4</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <!-- Player B input box -->
+                <label for="player-b">Player B:</label>
+                <input type="text" id="player-b" name="player-b">
+                <!-- Player B dropdown box -->
+                <label for="player-b-option">Select an option:</label>
+                <select id="player-b-option" name="player-b-option">
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                    <option value="option4">Option 4</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <!-- Player C input box -->
+                <label for="player-c">Player C:</label>
+                <input type="text" id="player-c" name="player-c">
+                <!-- Player C dropdown box -->
+                <label for="player-c-option">Select an option:</label>
+                <select id="player-c-option" name="player-c-option">
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                    <option value="option4">Option 4</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <!-- Player D input box -->
+                <label for="player-d">Player D:</label>
+                <input type="text" id="player-d" name="player-d">
+                <!-- Player D dropdown box -->
+                <label for="player-d-option">Select an option:</label>
+                <select id="player-d-option" name="player-d-option">
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                    <option value="option4">Option 4</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <!-- Button to submit the form -->
+                <button class="btn btn-primary" onclick="saveValues()">Submit</button>
+            </div>
+        </div>
+    </div>
+
     <div class="col-md-12 text-center">
         <a href="{{ url_for('manual') }}" class="btn btn-primary">Manual</a>
         
@@ -194,6 +263,37 @@
     { name: "C", color: "green", x: 5, y: 5, score: 0, prevX: 5, prevY: 5 },
     { name: "D", color: "yellow", x: 5, y: 5, score: 0, prevX: 5, prevY: 5 }
 ];
+
+function saveValues() {
+            // Get the values from the input boxes and dropdowns
+            var playerAName = document.getElementById('player-a').value;
+            var playerAOption = document.getElementById('player-a-option').value;
+
+            var playerBName = document.getElementById('player-b').value;
+            var playerBOption = document.getElementById('player-b-option').value;
+
+            var playerCName = document.getElementById('player-c').value;
+            var playerCOption = document.getElementById('player-c-option').value;
+
+            var playerDName = document.getElementById('player-d').value;
+            var playerDOption = document.getElementById('player-d-option').value;
+
+            // Save the values to players array
+            players[0].name = playerAName;
+            players[0].option = playerAOption;
+
+            players[1].name = playerBName;
+            players[1].option = playerBOption;
+
+            players[2].name = playerCName;
+            players[2].option = playerCOption;
+
+            players[3].name = playerDName;
+            players[3].option = playerDOption;
+
+            // Set the player information again after saving the values
+            setPlayerInformation();
+        }
 
 function updateFixedCells() {
         var fixedCells = {
