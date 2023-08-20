@@ -269,7 +269,7 @@
             </div>
         </div>
     </div>
-    
+   
 
     <div class="container">
         <div class="row">
@@ -347,6 +347,28 @@ function updateFixedCells() {
         }
     }
 
+    
+    
+    players.forEach(function (player) {
+        player.hqCount = 0;
+    });
+
+    function updateHQCount(currentPlayer) {
+        var hqPositions = [
+            [5, 1],
+            [5, 9],
+            [9, 5],
+            [1, 5]
+        ];
+
+        var currentPlayerPosition = [currentPlayer.x, currentPlayer.y];
+
+        if (hqPositions.some(pos => pos[0] === currentPlayerPosition[0] && pos[1] === currentPlayerPosition[1])) {
+            currentPlayer.hqCount++;
+        }
+    }
+    
+
     function movePlayer(direction, steps) {
     var currentPlayer = players[currentPlayerIndex];
 
@@ -370,23 +392,29 @@ function updateFixedCells() {
             break;
     }
 
+    // Calculate the score based on the number of steps moved
+    var scoreIncrement = 0.1 * steps;
+    currentPlayer.score += scoreIncrement;
+
     // Check if the player lands on E5 AGAIN
     if (currentPlayer.x === 5 && currentPlayer.y === 5) {
-        currentPlayer.score += 0.5;
-        alert(currentPlayer.name + " wins the game!");
+        if (currentPlayer.hqCount === 4) {
+            currentPlayer.score += 0.5;
+            alert(currentPlayer.name + " wins the game!");
+        } else {
+            alert(currentPlayer.name + " landed on 'Trivial Compute', but you need to visit all 4 HQ cells first!");
+        }
     }
 
-    // Check if the player lands past (5, 5) at the end
-    if (currentPlayer.x > 5 || currentPlayer.y > 5) {
-        currentPlayer.score += 1;
-        
-    }
+        // Check if the player lands on an HQ cell and update the hqCount
+        updateHQCount(currentPlayer);
+
 
         // Check if the player lands on "Roll Again"
         var cellId = "cell-" + String.fromCharCode(65 + (currentPlayer.y - 1)) + currentPlayer.x;
         var cell = document.getElementById(cellId);
         if (cell.innerHTML === "Roll Again") {
-            
+           
             alert(currentPlayer.name + " landed on 'Roll Again'! Rolling the dice again...");
             var diceRoll = Math.floor(Math.random() * 6) + 1;
             // Display the new dice value
@@ -430,16 +458,17 @@ function setPlayerInformation() {
             });
         });
             // Update the player scores in the player-scores div
-    var playerScoresElement = document.getElementById('player-scores');
-    playerScoresElement.innerHTML = '';
+      // Update the player scores in the player-scores div and display HQ count
+      var playerScoresElement = document.getElementById('player-scores');
+        playerScoresElement.innerHTML = '';
 
-    players.forEach(function (player) {
-        var playerScoreItem = document.createElement('li');
-        playerScoreItem.innerText = player.name + ': ' + player.score;
-        playerScoreItem.style.color = player.color;
+        players.forEach(function (player) {
+            var playerScoreItem = document.createElement('li');
+            playerScoreItem.innerText = player.name + ': ' + player.score + ' (HQ Count: ' + player.hqCount + ')';
+            playerScoreItem.style.color = player.color;
 
-        playerScoresElement.appendChild(playerScoreItem);
-    });
+            playerScoresElement.appendChild(playerScoreItem);
+        });
     }
 
 
@@ -510,24 +539,84 @@ function setPlayerInformation() {
             setPlayerInformation();
             askQuestion();
             return diceRoll;
-            
+           
         }
 
-        function askQuestion() {
+        var playerAQuestions = [
+        {
+            question: "For Player A: From Array 1?",
+            answer: "1",
+        },
+        {
+            question: "For Player A: From Array 2?",
+            answer: "1",
+        }
+        // Add more questions for Player A as needed
+    ];
+
+    var playerBQuestions = [
+        {
+            question: "For Player B: From Array 1?",
+            answer: "2",
+        },
+        {
+            question: "For Player B: From Array 2?",
+            answer: "2",
+        }
+        // Add more questions for Player B as needed
+    ];
+
+    var playerCQuestions = [
+        {
+            question: "For Player C: From Array 1?",
+            answer: "3",
+        },
+        {
+            question: "For Player C: From Array 2?",
+            answer: "3",
+        }
+        // Add more questions for Player C as needed
+    ];
+
+    var playerDQuestions = [
+        {
+            question: "For Player D: From Array 1?",
+            answer: "4",
+        },
+        {
+            question: "For Player D: From Array 2?",
+            answer: "4",
+        }
+        // Add more questions for Player D as needed
+    ];
+
+    // ... (existing JavaScript code) ...
+
+    function askQuestion() {
         var currentPlayer = players[currentPlayerIndex];
-        var randomQuestion = questions[Math.floor(Math.random() * questions.length)];
+        var randomQuestion;
+
+        // Select a question from the corresponding array based on the current player's index
+        if (currentPlayerIndex === 0) {
+            randomQuestion = playerAQuestions[Math.floor(Math.random() * playerAQuestions.length)];
+        } else if (currentPlayerIndex === 1) {
+            randomQuestion = playerBQuestions[Math.floor(Math.random() * playerBQuestions.length)];
+        } else if (currentPlayerIndex === 2) {
+            randomQuestion = playerCQuestions[Math.floor(Math.random() * playerCQuestions.length)];
+        } else if (currentPlayerIndex === 3) {
+            randomQuestion = playerDQuestions[Math.floor(Math.random() * playerDQuestions.length)];
+        }
 
         // Store the question and answer in localStorage to pass it to the question.html
         localStorage.setItem('question', randomQuestion.question);
         localStorage.setItem('answer', randomQuestion.answer);
-        
+
         // Open the question.html in a new window
         var questionWindow = window.open('/question', '_blank', 'height=400,width=400');
-        
+
         // Display the question and current player in the main page
         var outputElement = document.getElementById('output');
-        outputElement.innerHTML = currentPlayer.name + ", it's your turn!<br>Question: " + randomQuestion.question;
-    
+        outputElement.innerHTML = "Question: " + randomQuestion.question;
     }
 
     function checkAnswer(playerAnswer) {
@@ -547,16 +636,24 @@ function setPlayerInformation() {
     .then(response => response.json())
     .then(data => {
         if (data.is_correct) {
-            alert("Answer is correct!");
-            // Move the player only if the answer is correct
-            var diceRoll = parseInt(document.getElementById('diceValue').innerText, 10);
-            var chosenDirection = prompt("Choose a direction (up, down, left, right):");
-            if (chosenDirection !== null && chosenDirection !== "") {
-                movePlayer(chosenDirection.toLowerCase(), diceRoll);
+            // If the answer is correct, ask the user one more time
+            var confirmation = confirm("Is this correct? Click ok for yes, cancel for no");
+
+            if (confirmation) {
+                // Move the player only if the user confirms
+                var diceRoll = parseInt(document.getElementById('diceValue').innerText, 10);
+                var chosenDirection = prompt("Choose a direction (up, down, left, right):");
+                if (chosenDirection !== null && chosenDirection !== "") {
+                    movePlayer(chosenDirection.toLowerCase(), diceRoll);
+                }
+            } else {
+                // Move to the next player without moving the piece
+                alert("No was selected, Moving to next player!");
+                currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
             }
         } else {
-            alert("Answer is incorrect!");
-            // Move to the next player
+            // If the answer is incorrect, move to the next player
+            alert("Answer is incorrect, Moving to next player!");
             currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
         }
 
@@ -567,7 +664,8 @@ function setPlayerInformation() {
         console.error('Error checking the answer:', error);
     });
 }
-    
+
+   
     </script>
 
 
